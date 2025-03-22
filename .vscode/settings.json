@@ -57,6 +57,7 @@
   "files.associations": {
     ".fantomasignore": "ignore",
     "MLTable": "yaml",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "vector": "cpp"
   }
 }
