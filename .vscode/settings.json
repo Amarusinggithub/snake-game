@@ -58,6 +58,7 @@
     ".fantomasignore": "ignore",
     "MLTable": "yaml",
     "iostream": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "new": "cpp"
   }
 }
