@@ -11,21 +11,25 @@
 
 class Game{
     private:
+    enum class  Direction{UP,DOWN,RIGHT,LEFT};
+    const int WINDOW_HEIGHT = 700;
+    const int WINDOW_WIDTH = 800;
 
-    Snake snake;
-    Food food;
+    SDL_Window *window;  
+    SDL_Renderer* renderer;                 
+
+    Snake* snake;
+    Food* food;
     int points;
     public:
     Direction currentDirection=Direction::DOWN;
 
-
-
+    void close();
+    void init();
     void update();
-    void draw();
-    void collisionLogic();
-    void start();
     void restart();
-    void spawnFood();
+    void draw();
+    void start();
 
 
 };

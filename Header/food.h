@@ -3,14 +3,16 @@
 
 class Food{
     private:
-    int Height=20;
+    int Height=30;
     int Width=30;
     public:
     int y;
     int x;
-    SDL_FRect food;
+    SDL_FRect* food;
 
-     void  render(SDL_Renderer *renderer);
+    void  render(SDL_Renderer *renderer);
+    void spawnFood(Snake *snake,int WINDOW_WIDTH,int WINDOW_HEIGHT);
+
 
 };
 

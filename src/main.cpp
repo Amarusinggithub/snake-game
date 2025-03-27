@@ -62,7 +62,7 @@ void init(){
     
 
 
-    food.h = 20;
+    food.h = 0;
     food.w = 30;
     food.x = 450;
     food.y = 500;
@@ -83,6 +83,8 @@ SDL_RenderFillRect( renderer, body[i] );
 
 SDL_SetRenderDrawColor(renderer,255, 0, 0, 255);
 SDL_RenderFillRect(renderer, &food);
+
+
 SDL_RenderPresent(renderer);
 };
 
@@ -169,12 +171,8 @@ int main(int argc, char* argv[]) {
     init();
     runGame();
     close();   
-    
-    
     return 0;
 }
-
-
 
 void close(){
 SDL_DestroyRenderer(renderer);
@@ -308,5 +306,4 @@ void outOfBoundCheck(){
             body[i]->y=WINDOW_HEIGHT;
         }
     }
-   
     }

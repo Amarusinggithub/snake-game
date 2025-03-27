@@ -3,3 +3,4 @@ build
 CMakePresets
 .github/**
 settings.json
+.git
