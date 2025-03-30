@@ -1,36 +1,34 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <iostream>
-#include <SDL3/SDL.h>
-#include <fstream>
-#include <cstdlib>
-#include <vector>
-
 using namespace std;
+
+
+class Food;
 
 class Snake{
     public: 
+    Snake(){
+    head= new SDL_FRect();
+    head->x = 30;
+    head->y = 30;
+    head->w = 30;
+    head->h = 30;   
+    body.push_back(head);
+    }
+
     SDL_FRect* head;
-    SDL_FRect* bodyPart;
     int HEIGHT,WIDTH;
-    vector <SDL_FRect*>body={head};
+    vector <SDL_FRect*>body;
 
     void render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT);
     void grow();
     void move();
-    bool didEatFood();
+    bool didEatFood(Food food,Snake snake);
     bool selfCollisionCheck();
     void outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT);
     
-
-
-
     private:
-    bool check_collision( SDL_FRect A, SDL_FRect B );
-
-
+    bool check_collision( SDL_FRect* A, SDL_FRect* B );
 };
-
-
 #endif

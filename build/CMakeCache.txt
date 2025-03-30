@@ -157,7 +157,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=SDL3SnakeGame
+CMAKE_PROJECT_NAME:STATIC=SnakeGame
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/msys64/ucrt64/bin/ranlib.exe
@@ -253,6 +253,15 @@ SDL3SnakeGame_SOURCE_DIR:STATIC=C:/Users/amarc/OneDrive/Desktop/vs code projects
 
 //The directory containing a CMake configuration file for SDL3.
 SDL3_DIR:PATH=C:/msys64/ucrt64/lib/cmake/SDL3
+
+//Value Computed by CMake
+SnakeGame_BINARY_DIR:STATIC=C:/Users/amarc/OneDrive/Desktop/vs code projects/snake-game/build
+
+//Value Computed by CMake
+SnakeGame_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+SnakeGame_SOURCE_DIR:STATIC=C:/Users/amarc/OneDrive/Desktop/vs code projects/snake-game
 
 
 ########################

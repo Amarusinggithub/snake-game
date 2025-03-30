@@ -1,18 +1,9 @@
-
-#include <iostream>
-#include <SDL3/SDL.h>
-#include <fstream>
-#include <cstdlib>
-#include <Snake.h>
-#include <Game.h>
-#include <Food.h>
-#include <globals.h>
-#include <SDL3/SDL.h>
-
-
+#include "game.h"
 
 void Game::init(){
-SDL_Init(SDL_INIT_EVENTS); 
+    const char * SDL_GetRenderDriver(int index);
+
+SDL_Init(SDL_INIT_VIDEO); 
 
     window = SDL_CreateWindow(
         "Snake Game",                 
@@ -27,27 +18,25 @@ SDL_Init(SDL_INIT_EVENTS);
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create window: %s\n", SDL_GetError());
     }
 
-    
-    int headRandomX= rand() % WINDOW_WIDTH;
-    int headRandomY = rand() % WINDOW_HEIGHT;
+    lastTime=SDL_GetTicks();
+    snake = new Snake();
+    food = new Food();
 
 snake->grow();
 snake->grow();
 food->spawnFood(snake, WINDOW_WIDTH, WINDOW_HEIGHT);
-
 }
 
-
 void Game::draw(){
+SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+SDL_RenderClear( renderer );
 snake->render(renderer,WINDOW_WIDTH,WINDOW_HEIGHT); 
 food->render(renderer);
 SDL_RenderPresent(renderer);
 }
 
-
-
-
 void Game:: restart(){
+    score=0;
 for (int i=snake->body.size()-1;i>0;i--){
     snake->body.erase(snake->body.begin() + i);
 }
@@ -55,16 +44,8 @@ snake->grow();
 snake->grow();
 }
 
+void Game:: changeDirectionOfSnake (SDL_Event event){
 
-void Game:: start (){
-    Uint32 lastTime=SDL_GetTicks();
-    Uint32 moveInterval=150;
-while (!done) {
-    while (SDL_PollEvent(&event) !=0) {
-        if (event.type == SDL_EVENT_QUIT){
-            done = true;
-            }
-            if(event.type== SDL_EVENT_KEY_DOWN ){
                 switch (event.key.key){
                     case SDLK_UP:
                     if(currentDirection!=Direction::DOWN)currentDirection=Direction::UP;
@@ -81,12 +62,13 @@ while (!done) {
                     if(currentDirection!=Direction::RIGHT)currentDirection=Direction::LEFT;
                     break;
                 }
-            }  
-        }
-    Uint32 currentIme=SDL_GetTicks();
+}
+
+void Game:: moveSnake(){
+Uint32 currentIme=SDL_GetTicks();
     if(currentIme-lastTime>=moveInterval){
         lastTime=currentIme;
-
+        snake->move();
         switch (currentDirection)
         {
         case Direction::UP:
@@ -105,11 +87,27 @@ while (!done) {
         default:
             break;
         }
-        snake->didEatFood();
+        check_collision();
     }
     draw();
     SDL_Delay(16);
+    
     }
+
+
+void Game:: check_collision(){
+    if(snake->didEatFood(*food,*snake)){
+    std::cout<<"Score increment";
+        score++;
+        food->spawnFood(snake,WINDOW_WIDTH,WINDOW_HEIGHT);
+    }
+
+    if(snake->selfCollisionCheck()){
+        std::cout<<"Game will restart";
+        restart();
+    }
+
+    snake->outOfBoundCheck( WINDOW_WIDTH, WINDOW_HEIGHT);        
 }
 
 void Game:: close(){

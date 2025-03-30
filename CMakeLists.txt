@@ -7,13 +7,14 @@ add_definitions(-std=c++17)
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
 
-project(SDL3SnakeGame)
+project(SnakeGame)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 find_package(SDL3 REQUIRED)
-include_directories(${SDL3_INCLUDE_DIRS} src )
 
-add_executable(SnakeGame src/main.cpp src/game.cpp src/snake.cpp src/food.cpp src/globals.cpp )
-string(STRIP ${SDL3_LIBRARIES} SDL3_LIBRARIES)
-target_link_libraries(SnakeGame ${SDL3_LIBRARIES})
+include_directories(${SDL3_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/src)
+
+
+add_executable(snake_game src/main.cpp src/game.cpp src/snake.cpp src/food.cpp )
+target_link_libraries(snake_game ${SDL3_LIBRARIES})

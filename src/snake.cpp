@@ -1,42 +1,46 @@
-
-#include <iostream>
-#include <SDL3/SDL.h>
-#include <fstream>
-#include <cstdlib>
-#include <vector>
-#include "snake.h"
+#include "game.h"
 
 using namespace std;
 
-
-
 void Snake:: render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT){
-    int headRandomX= rand() % WINDOW_WIDTH;
-    int headRandomY = rand() % WINDOW_HEiGHT;
-
-    body[0]->x=30;
-    body[0]->y=30;
-
     for(int i=0;i<body.size();i++){
-    body[i]->w=WIDTH;
-    body[i]->h=HEIGHT;
-
-    SDL_SetRenderDrawColor(renderer,255, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer,0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderFillRect(renderer, body[i]);
         }
     }
 
 void Snake:: grow(){
 SDL_FRect* part= new SDL_FRect();
-        part->h=30;
-        part->w=30;
-        body.push_back(part);
+    part->h = 30;
+    part->w = 30;
 
-    }
+    if(body.size()>=2){
+    SDL_FRect* tail=body.back();
+    SDL_FRect* prev=body[body.size()-2];
 
+    float dx=tail->x-prev->x;
+    float dy=tail->y-prev->y;
+
+        part->x=tail->x+dx;
+        part->y=tail->y+dy;
+}
+else if (!body.empty()) {
+        // If there's only one segment, choose a default direction (e.g., to the left)
+        SDL_FRect* tail = body.back();
+        part->x = tail->x - 30;
+        part->y = tail->y;
+    } else {
+
+    part->x=30;
+    part->y=30;
+}
+
+
+    body.push_back(part);
+}
 
 void Snake::move(){
-        for(int i=body.size();i>0;i--){
+        for(int i=body.size()-1;i>0;i--){
             body[i]->x=body[i-1]->x;
             body[i]->y=body[i-1]->y;
             body[i]->w=body[i-1]->w;
@@ -44,18 +48,7 @@ void Snake::move(){
         }
     }
 
-
-bool Snake::selfCollisionCheck(){
-    for(int i=body.size()-1;i>=4;i--){
-    if(check_collision(*body[i],*body[0])){
-    return true;   
-    }
-}
-return false;
-}
-
-
-void Snake::outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT){
+    void Snake::outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT){
         for (int i=0; i<body.size();i++){
         if(body[i]->x>WINDOW_WIDTH){
             body[i]->x=0;
@@ -73,27 +66,48 @@ void Snake::outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT){
             body[i]->y=WINDOW_HEiGHT;
         }
     }
+}
+
+
+bool Snake::selfCollisionCheck(){
+    if (body.size()<=3)return false;
+
+    for(int i=2;i<body.size();i++){
+    if(check_collision(body[i],body[0])){
+    return true;   
+    }
+}
+return false;
+}
+
+bool Snake::didEatFood(Food food,Snake snake){
+if (check_collision(snake.head,food.food)){
+    grow();
+    return true;
+
+}
+    return false;
     }
 
 
-bool Snake::check_collision( SDL_FRect A, SDL_FRect B ){
+bool Snake::check_collision( SDL_FRect * A, SDL_FRect* B ){
     //The sides of the rectangles
-    int leftA, leftB;
-    int rightA, rightB;
-    int topA, topB;
-    int bottomA, bottomB;
+    float leftA, leftB;
+    float rightA, rightB;
+    float topA, topB;
+    float bottomA, bottomB;
 
     //Calculate the sides of rect A
-    leftA = A.x;
-    rightA = A.x + A.w;
-    topA = A.y;
-    bottomA = A.y + A.h;
+    leftA = A->x;
+    rightA = A->x + A->w;
+    topA = A->y;
+    bottomA = A->y + A->h;
 
     //Calculate the sides of rect B
-    leftB = B.x;
-    rightB = B.x + B.w;
-    topB = B.y;
-    bottomB = B.y + B.h;
+    leftB = B->x;
+    rightB = B->x + B->w;
+    topB = B->y;
+    bottomB = B->y + B->h;
 
      //If any of the sides from A are outside of B
     if( bottomA <= topB )
