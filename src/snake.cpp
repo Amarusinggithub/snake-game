@@ -14,7 +14,7 @@ SDL_FRect* part= new SDL_FRect();
     part->h = 30;
     part->w = 30;
 
-    if(body.size()>=2){
+if(body.size()>=2){
     SDL_FRect* tail=body.back();
     SDL_FRect* prev=body[body.size()-2];
 
@@ -34,8 +34,6 @@ else if (!body.empty()) {
     part->x=30;
     part->y=30;
 }
-
-
     body.push_back(part);
 }
 
