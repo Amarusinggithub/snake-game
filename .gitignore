@@ -45,3 +45,7 @@ build/
 
 # IDE settings
 .idea/
+
+.vscode/*
+!.vscode/tasks.json
+!.vscode/extensions.json
