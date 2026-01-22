@@ -30,13 +30,13 @@ class Game{
     Food* food;
     Direction currentDirection=Direction::DOWN;
 
-    void close();
+    void close() const;
     void init();
     void update();
     void restart();
-    void draw();
+    void draw() const;
     void start();
-    void changeDirectionOfSnake(SDL_Event event);
+    void changeDirectionOfSnake(const SDL_Event &event);
     void moveSnake();
     void check_collision();
 };

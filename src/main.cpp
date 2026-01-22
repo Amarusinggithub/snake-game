@@ -5,7 +5,7 @@ using namespace std;
 void runGame ();
 SDL_Event event;
 bool done = false;
-Game game=  Game();
+auto game=  Game();
 
 
 void runGame (){

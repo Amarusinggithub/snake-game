@@ -2,15 +2,15 @@
 
 using namespace std;
 
-void Snake:: render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT){
-    for(int i=0;i<body.size();i++){
+void Snake:: render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT) const {
+    for(const auto i : body){
     SDL_SetRenderDrawColor(renderer,0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderFillRect(renderer, body[i]);
+    SDL_RenderFillRect(renderer, i);
         }
     }
 
 void Snake:: grow(){
-SDL_FRect* part= new SDL_FRect();
+auto* part= new SDL_FRect();
     part->h = 30;
     part->w = 30;
 
@@ -25,7 +25,6 @@ if(body.size()>=2){
         part->y=tail->y+dy;
 }
 else if (!body.empty()) {
-        // If there's only one segment, choose a default direction (e.g., to the left)
         SDL_FRect* tail = body.back();
         part->x = tail->x - 30;
         part->y = tail->y;
@@ -37,7 +36,7 @@ else if (!body.empty()) {
     body.push_back(part);
 }
 
-void Snake::move(){
+void Snake::move() const {
         for(int i=body.size()-1;i>0;i--){
             body[i]->x=body[i-1]->x;
             body[i]->y=body[i-1]->y;
@@ -46,7 +45,9 @@ void Snake::move(){
         }
     }
 
-    void Snake::outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT){
+
+
+    void Snake::outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT) const {
         for (int i=0; i<body.size();i++){
         if(body[i]->x>WINDOW_WIDTH){
             body[i]->x=0;
@@ -70,7 +71,7 @@ void Snake::move(){
 bool Snake::selfCollisionCheck(){
     if (body.size()<=3)return false;
 
-    for(int i=2;i<body.size();i++){
+    for(int i=3;i<body.size();i++){
     if(check_collision(body[i],body[0])){
     return true;   
     }
@@ -78,14 +79,13 @@ bool Snake::selfCollisionCheck(){
 return false;
 }
 
-bool Snake::didEatFood(Food food,Snake snake){
-if (check_collision(snake.head,food.food)){
+bool Snake::didEatFood(const Food &food){
+if (check_collision(body[0],food.food)){
     grow();
     return true;
-
-}
-    return false;
     }
+        return false;
+}
 
 
 bool Snake::check_collision( SDL_FRect * A, SDL_FRect* B ){

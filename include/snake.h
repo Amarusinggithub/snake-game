@@ -21,14 +21,14 @@ class Snake{
     int HEIGHT,WIDTH;
     vector <SDL_FRect*>body;
 
-    void render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT);
+    void render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT) const;
     void grow();
-    void move();
-    bool didEatFood(Food food,Snake snake);
+    void move() const;
+    bool didEatFood(const Food& food);
     bool selfCollisionCheck();
-    void outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT);
+    void outOfBoundCheck(int WINDOW_WIDTH,int WINDOW_HEiGHT) const;
     
     private:
-    bool check_collision( SDL_FRect* A, SDL_FRect* B );
+    static bool check_collision( SDL_FRect* A, SDL_FRect* B );
 };
 #endif

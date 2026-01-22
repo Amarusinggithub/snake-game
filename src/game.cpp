@@ -1,9 +1,9 @@
 #include "game.h"
 
 void Game::init(){
-    const char * SDL_GetRenderDriver(int index);
 
-SDL_Init(SDL_INIT_VIDEO); 
+
+    SDL_Init(SDL_INIT_VIDEO); 
 
     window = SDL_CreateWindow(
         "Snake Game",                 
@@ -11,10 +11,9 @@ SDL_Init(SDL_INIT_VIDEO);
         WINDOW_HEIGHT,                           
         SDL_WINDOW_OPENGL               
     );
-    renderer = SDL_CreateRenderer(window,NULL); 
+    renderer = SDL_CreateRenderer(window,nullptr);
 
-    // Check that the window was successfully created
-    if (window == NULL) {
+    if (window == nullptr) {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create window: %s\n", SDL_GetError());
     }
 
@@ -22,12 +21,12 @@ SDL_Init(SDL_INIT_VIDEO);
     snake = new Snake();
     food = new Food();
 
-snake->grow();
-snake->grow();
-food->spawnFood(snake, WINDOW_WIDTH, WINDOW_HEIGHT);
+    snake->grow();
+    snake->grow();
+    food->spawnFood(snake, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
-void Game::draw(){
+void Game::draw() const {
 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 SDL_RenderClear( renderer );
 snake->render(renderer,WINDOW_WIDTH,WINDOW_HEIGHT); 
@@ -44,7 +43,7 @@ snake->grow();
 snake->grow();
 }
 
-void Game:: changeDirectionOfSnake (SDL_Event event){
+void Game:: changeDirectionOfSnake (const SDL_Event &event){
 
                 switch (event.key.key){
                     case SDLK_UP:
@@ -61,12 +60,12 @@ void Game:: changeDirectionOfSnake (SDL_Event event){
                     case SDLK_LEFT:
                     if(currentDirection!=Direction::RIGHT)currentDirection=Direction::LEFT;
                     break;
+                default: ;
                 }
 }
 
 void Game:: moveSnake(){
-Uint32 currentIme=SDL_GetTicks();
-    if(currentIme-lastTime>=moveInterval){
+    if(const Uint32 currentIme=SDL_GetTicks(); currentIme-lastTime>=moveInterval){
         lastTime=currentIme;
         snake->move();
         switch (currentDirection)
@@ -96,7 +95,7 @@ Uint32 currentIme=SDL_GetTicks();
 
 
 void Game:: check_collision(){
-    if(snake->didEatFood(*food,*snake)){
+    if(snake->didEatFood(*food)){
     std::cout<<"Score increment";
         score++;
         food->spawnFood(snake,WINDOW_WIDTH,WINDOW_HEIGHT);
@@ -110,7 +109,7 @@ void Game:: check_collision(){
     snake->outOfBoundCheck( WINDOW_WIDTH, WINDOW_HEIGHT);        
 }
 
-void Game:: close(){
+void Game:: close() const {
 SDL_DestroyRenderer(renderer);
 // Close and destroy the window
 SDL_DestroyWindow(window);
