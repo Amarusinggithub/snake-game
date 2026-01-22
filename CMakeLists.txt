@@ -17,7 +17,7 @@ find_package(SDL3 REQUIRED)
 target_include_directories(snake_game PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 
-include_directories(${SDL3_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/src)
+include_directories(${SDL3_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 
 
 target_link_libraries(snake_game ${SDL3_LIBRARIES})
