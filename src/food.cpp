@@ -2,7 +2,7 @@
 
  void Food:: render(SDL_Renderer *renderer){
     SDL_SetRenderDrawColor(renderer,255, 0, 0, 255);
-    SDL_RenderFillRect(renderer, food);
+    SDL_RenderFillRectF(renderer, food);
 }
 
 void Food::spawnFood(Snake *snake,int WINDOW_WIDTH,int WINDOW_HEIGHT){

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 
 project(SnakeGame)
@@ -13,11 +13,11 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
 
 add_executable(snake_game "src/main.cpp" "src/game.cpp" "src/snake.cpp" "src/food.cpp")
 
-find_package(SDL3 REQUIRED)
+find_package(SDL2 REQUIRED)
 target_include_directories(snake_game PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 
-include_directories(${SDL3_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
+include_directories(${SDL2_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 
 
-target_link_libraries(snake_game ${SDL3_LIBRARIES})
+target_link_libraries(snake_game ${SDL2_LIBRARIES})

@@ -1,8 +1,6 @@
 #ifndef FOOD_H
 #define FOOD_H
 
-
-
 class Snake;
 
 class Food{

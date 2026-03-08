@@ -3,19 +3,17 @@
 using namespace std;
 
 void runGame ();
-SDL_Event event;
-bool done = false;
+SDL_Event e;
+bool quit = false;
 auto game=  Game();
 
 
 void runGame (){
-while (!done) {
-        while (SDL_PollEvent(&event) !=0) {
-            if (event.type == SDL_EVENT_QUIT){
-                done = true;
-                }
-            if(event.type== SDL_EVENT_KEY_DOWN ){
-                game.changeDirectionOfSnake(event);
+while (!quit) {
+        while (SDL_PollEvent(&e) !=0) {
+            if (e.type == SDL_QUIT)quit = true;
+            if(e.type== SDL_KEYDOWN ){
+                game.changeDirectionOfSnake(e);
             } 
         }
     game.moveSnake();

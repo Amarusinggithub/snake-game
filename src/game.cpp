@@ -6,12 +6,14 @@ void Game::init(){
     SDL_Init(SDL_INIT_VIDEO); 
 
     window = SDL_CreateWindow(
-        "Snake Game",                 
-        WINDOW_WIDTH,                              
-        WINDOW_HEIGHT,                           
-        SDL_WINDOW_OPENGL               
+        "Snake Game",
+        SDL_WINDOWPOS_CENTERED,
+        SDL_WINDOWPOS_CENTERED,
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT,
+        SDL_WINDOW_OPENGL
     );
-    renderer = SDL_CreateRenderer(window,nullptr);
+    renderer = SDL_CreateRenderer(window, -1, 0);
 
     if (window == nullptr) {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Could not create window: %s\n", SDL_GetError());
@@ -45,7 +47,7 @@ snake->grow();
 
 void Game:: changeDirectionOfSnake (const SDL_Event &event){
 
-                switch (event.key.key){
+                switch (event.key.keysym.sym){
                     case SDLK_UP:
                     if(currentDirection!=Direction::DOWN)currentDirection=Direction::UP;
                     break;

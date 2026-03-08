@@ -5,7 +5,7 @@ using namespace std;
 void Snake:: render(SDL_Renderer *renderer,int WINDOW_WIDTH,int WINDOW_HEiGHT) const {
     for(const auto i : body){
     SDL_SetRenderDrawColor(renderer,0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderFillRect(renderer, i);
+    SDL_RenderFillRectF(renderer, i);
         }
     }
 
